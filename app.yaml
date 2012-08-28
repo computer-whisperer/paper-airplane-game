@@ -1,0 +1,23 @@
+application: paperairplanegame
+version: 0-0-2-2-5
+runtime: python27
+api_version: 1
+threadsafe: no
+
+handlers:
+- url: /
+  static_files: PaperAirplane/index.html
+  upload: PaperAirplane/index\.html
+
+- url: /Background.jpg
+  static_files: PaperAirplane/Background.jpg
+  upload: PaperAirplane/Background\.jpg
+  expiration: 10d
+
+- url: /(.*)
+  static_files: PaperAirplane/\1
+  upload: PaperAirplane/(.*)
+
+libraries:
+- name: webapp2
+  version: "2.5.1"
