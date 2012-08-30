@@ -4,7 +4,6 @@
 #import('../Graphics.dart');
 #import('../Utilities.dart');
 #import('../GameMode.dart');
-#import('dart:html');
 class Level
 {
   num width, height;

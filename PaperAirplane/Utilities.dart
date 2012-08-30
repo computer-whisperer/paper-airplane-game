@@ -66,10 +66,10 @@ class force{
       else{
       if(f.point.x != 0)f.rotateForce(atan(f.point.y/f.point.x));
       else f.rotateForce(PI/2);
-      if(f.point.x < 0)f.rotateForce(PI);
+      if(f.point.x < 0)f.forceVector *= -1;
       vector2 directionalForce = new vector2(f.forceVector.x,0);
       num distance = sqrt(f.point.y*f.point.y + f.point.x*f.point.x);
-      num rotationalForce = f.forceVector.y/distance;
+      num rotationalForce = -f.forceVector.y/distance;
       if(rotationalForce.isInfinite())rotationalForce = 0;
       if(f.point.x != 0)f.rotateForce(-atan(f.point.y/f.point.x));
       else f.rotateForce(-PI/2);

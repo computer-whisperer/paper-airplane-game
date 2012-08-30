@@ -4,14 +4,15 @@
 #import('../../../Utilities.dart');
 #import('../../PhysicalObject.dart');
 #import('../ActiveObject.dart');
-#import('dart:core');
 #import('dart:html');
 
 class Airplane extends ActiveObject {
   num AIRFOILLIFTFACTOR = 2;
   num ANGLEOFATTACKLIFTFACTOR = 15;
   num DRAG = -0.00001;
-  num ROTATIONFACTOR = 5;
+  num ROTATIONFACTOR = 500;
+  num ROTATIONDRAG = 30;
+  num ROTATIONTHRESHHOLD = 5;
   num REBOUNDFACTOR = 1.00002;
   num DAMAGETHRESHHOLD = 50.0;
   bool leftArrowPressed = false;
@@ -42,7 +43,8 @@ class Airplane extends ActiveObject {
       forces.add(gravity);
       forces.add(drag);
       forces.add(lift);
-     // forces.add(elevator);
+      forces.add(elevator);
+      forces.add(rotDrag);
     }
     
   
@@ -66,19 +68,26 @@ class Airplane extends ActiveObject {
     return d;
     }
   
+  force rotDrag(State state, num t){
+    return new force(new vector2(0,-state.vel.r*ROTATIONDRAG),new vector2(-20,0));
+  }
+  
   force elevator(State state, num t){
-    vector2 windspeed = state.vel + gameMode.level.windspeed(position);
-    windspeed.rotate(-state.pos.r);
     force rot = new force(new vector2(0,0), new vector2(-20,0));
-    if(rightArrowPressed)rot.forceVector.y -= ROTATIONFACTOR;
-    if(leftArrowPressed)rot.forceVector.y += ROTATIONFACTOR ;
-    rot.rotateForce(state.pos.r);
+    if(rightArrowPressed && state.vel.r < ROTATIONTHRESHHOLD){
+      rot.forceVector.y += ROTATIONFACTOR;
+      if(state.vel.r > ROTATIONTHRESHHOLD) state.vel.r = ROTATIONTHRESHHOLD;
+    }
+    if(leftArrowPressed && state.vel.r > -ROTATIONTHRESHHOLD){
+      rot.forceVector.y -= ROTATIONFACTOR ;
+      if(state.vel.r < -ROTATIONTHRESHHOLD) state.vel.r = -ROTATIONTHRESHHOLD;
+    }
     return rot;
   }
   
   void update(num t, num dt){
-    if(rightArrowPressed)position.r += ROTATIONFACTOR * dt;
-    if(leftArrowPressed)position.r -= ROTATIONFACTOR * dt;
+    //if(rightArrowPressed)position.r += ROTATIONFACTOR * dt;
+    //if(leftArrowPressed)position.r -= ROTATIONFACTOR * dt;
     super.update(t,dt);
   }
 }

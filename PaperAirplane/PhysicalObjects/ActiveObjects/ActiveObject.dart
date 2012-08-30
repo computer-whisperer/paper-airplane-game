@@ -15,11 +15,11 @@ class ActiveObject extends PhysicalObject {
     Id = new Random().nextDouble();
     externalForces = new List();
     forces = new List();
-    forces.add(collisionResults);
+    //forces.add(collisionResults);
     active = true;
     previousState = new State(mass,position,velocity);
     image.on.load.add((var e){
-      loading = true;
+      loading = true; 
       edgePoints = parseImageForPixels(edgeColor);
     for(int i = 0; i < edgePoints.length; i++){
       edgePoints[i].x = (edgePoints[i].x-(image.width/2))*scale;
@@ -31,6 +31,9 @@ class ActiveObject extends PhysicalObject {
   
   update(num t, num dt){
     integrate(t,dt);
+    collisionResults(new State(mass,position,velocity),t+dt);
+    vector2R totf = force.add(externalForces);
+    velocity += totf;
     super.update(t,dt);
   }
   
@@ -70,8 +73,8 @@ class ActiveObject extends PhysicalObject {
       forceList.add(forces[i](state,t));
       forceList[i].forceVector /= mass;
     }
-    forceList.addAll(externalForces);
-    externalForces == new List();
+    //forceList.addAll(externalForces);
+    externalForces.clear();
     return force.add(forceList);
   }
   
@@ -103,6 +106,7 @@ class ActiveObject extends PhysicalObject {
       else if(pointsOfContact.length > 1){
         //find the two points that are furthest apart
         num distance = 0, c1, c2;
+
         for(num cp = 0; cp < pointsOfContact.length; cp++){
           for(num cp2 = 0; cp2 < pointsOfContact.length; cp2++){
             num d = pointsOfContact[cp].getDistanceTo(pointsOfContact[cp2]);
@@ -113,8 +117,12 @@ class ActiveObject extends PhysicalObject {
             }
           }
         }
-        if(pointsOfContact[c2].x-pointsOfContact[c1].x == 0) contactNormals.add(0);
-        else contactNormals.add(atan(pointsOfContact[c2].y-pointsOfContact[c1].y/pointsOfContact[c2].x-pointsOfContact[c1].x)+ PI/2);
+        vector2 point1 = pointsOfContact[c1];
+        vector2 point2 = pointsOfContact[c2];
+        vector2 difference = pointsOfContact[c2] - pointsOfContact[c1];
+        num origangle = atan(difference.y/difference.x);
+        if(difference.x == 0) contactNormals.add(0);
+        else contactNormals.add(origangle + PI/2);
         allContacts.add(pointsOfContact[c1]+(pointsOfContact[c2]-pointsOfContact[c1])/2);
         objects.add(po);
       }
@@ -124,19 +132,19 @@ class ActiveObject extends PhysicalObject {
     List<force> collisionReactions = new List<force>();
     for(num c = 0; c < allContacts.length; c++){
       vector2 startForce = new vector2(state.vel.x,state.vel.y);
-      startForce.rotate(contactNormals[c]);
-      force appliedForce = new force(new vector2(-(startForce.y).abs(),startForce.x*(friction+gameMode.level.physicalObjects[objects[c]].friction)/2),state.translateToWorld(allContacts[c]));
-      appliedForce.rotateForce(-contactNormals[c]);
+      startForce.rotate(-contactNormals[c]);
+      force appliedForce = new force(new vector2(-startForce.x,startForce.y*(friction+gameMode.level.physicalObjects[objects[c]].friction)/2),state.translateToWorld(allContacts[c]));
+      appliedForce.rotateForce(contactNormals[c]);
       appliedForce.forceVector/=2;
       if(gameMode.level.physicalObjects[objects[c]].addExternalForce(appliedForce)){
         appliedForce.point -= new vector2(state.pos.x, state.pos.y);
-        appliedForce.forceVector.rotate(state.pos.r);
+      //  appliedForce.forceVector.rotate(state.pos.r);
         externalForces.add(appliedForce);
       }
       else{
         appliedForce.forceVector *= 2;
         appliedForce.point -= new vector2(state.pos.x, state.pos.y);
-        appliedForce.forceVector.rotate(state.pos.r);
+       // appliedForce.forceVector.rotate(state.pos.r);
         externalForces.add(appliedForce);
       }
     }

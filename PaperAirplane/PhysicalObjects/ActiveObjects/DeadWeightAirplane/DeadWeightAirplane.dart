@@ -4,7 +4,6 @@
 #import('../../../Utilities.dart');
 #import('../../PhysicalObject.dart');
 #import('../ActiveObject.dart');
-#import('dart:core');
 #import('dart:html');
 
 class DeadWeightAirplane extends ActiveObject {

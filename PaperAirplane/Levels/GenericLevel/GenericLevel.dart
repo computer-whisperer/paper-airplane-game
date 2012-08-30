@@ -9,7 +9,7 @@
 class GenericLevel extends Level {
   GenericLevel(String backgroundPath) : super(){
     physicalObjects.add(new Background(backgroundPath));
-    physicalObjects.add(new Airplane(new vector2R(250,750,0),new vector2R(710,0,0)));
+    physicalObjects.add(new Airplane(new vector2R(250,750,0),new vector2R(1000,0,0)));
     panFocus = physicalObjects.length - 1;
   }  
 }

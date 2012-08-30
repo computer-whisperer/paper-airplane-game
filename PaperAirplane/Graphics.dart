@@ -1,5 +1,4 @@
 #library('Graphics');
-#import('dart:core');
 #import('dart:html');
 #import('Utilities.dart');
 #import('PaperAirplane.dart');
@@ -88,6 +87,9 @@ class Graphic{
     p.x += width/2;
     p.y += height/2;
     p = p.round();
+    if(p.x < 0 || p.x > width || p.y < 0 || p.y > height){
+      print('alert');
+    }
     p.y = image.height - p.y - 1;
     num i = ((image.width*p.y)+p.x).toInt();
     if(i<0) print('i < 0, i = $i !');

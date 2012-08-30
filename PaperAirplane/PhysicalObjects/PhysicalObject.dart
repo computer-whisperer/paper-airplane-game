@@ -26,8 +26,8 @@ class PhysicalObject extends Graphic  {
   bool isEdge(vector2 point){
     point -= new vector2(position.x,position.y);
     point.rotate(-position.r);
-    if(point.x < -width/2 || point.x > width/2 || point.y < -height/2 || point.y > height/2)
-      return false;
+    if(point.x < -width/2 || point.x > width/2-1 || point.y < -height/2 || point.y > height/2-1)
+      return true;
 
     return (getPixelColor(point) == edgeColor);
   }
