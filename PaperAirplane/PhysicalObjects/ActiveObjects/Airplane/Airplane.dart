@@ -1,10 +1,10 @@
-#library('Airplane');
-#import('../../../Graphics.dart');
-#import('../../../PaperAirplane.dart');
-#import('../../../Utilities.dart');
-#import('../../PhysicalObject.dart');
-#import('../ActiveObject.dart');
-#import('dart:html');
+library Airplane;
+import '../../../Graphics.dart';
+import '../../../PaperAirplane.dart';
+import '../../../Utilities.dart';
+import '../../PhysicalObject.dart';
+import '../ActiveObject.dart';
+import 'dart:html';
 
 class Airplane extends ActiveObject {
   num AIRFOILLIFTFACTOR = 2;
@@ -12,13 +12,13 @@ class Airplane extends ActiveObject {
   num DRAG = -0.00001;
   num ROTATIONFACTOR = 500;
   num ROTATIONDRAG = 30;
-  num ROTATIONTHRESHHOLD = 5;
+  num ROTATIONTHRESHHOLD = 2;
   num REBOUNDFACTOR = 1.00002;
   num DAMAGETHRESHHOLD = 50.0;
   bool leftArrowPressed = false;
   bool rightArrowPressed = false;
-  
-  
+
+
   Airplane(vector2R position,vector2R speed) : super(position, 1/3, speed, .5, "PhysicalObjects/ActiveObjects/Airplane/PaperAirplane.png", -16777216){
     document.on.keyDown.add((KeyboardEvent event) {
       switch (event.keyCode) {
@@ -31,7 +31,7 @@ class Airplane extends ActiveObject {
           leftArrowPressed = false;
           break;
       }});
-      document.on.keyUp.add((KeyboardEvent event) {        
+      document.on.keyUp.add((KeyboardEvent event) {
         switch (event.keyCode) {
           case 37:
             leftArrowPressed = false;
@@ -46,8 +46,8 @@ class Airplane extends ActiveObject {
       forces.add(elevator);
       forces.add(rotDrag);
     }
-    
-  
+
+
   force lift(State state, num t){
     vector2 windspeed = state.vel + gameMode.level.windspeed(position);
     windspeed.rotate(-state.pos.r);
@@ -58,20 +58,20 @@ class Airplane extends ActiveObject {
     total.forceVector.rindex = 0;
     return total;
   }
-  
+
   force drag(State state, num t){
     vector2 windspeed = state.vel + gameMode.level.windspeed(position);
     windspeed.rotate(-state.pos.r);
     force d = new force(new vector2(windspeed.x*DRAG,0),new vector2(0,0));
     d.rotateForce(state.pos.r);
-    d.forceVector.rindex = 0; 
+    d.forceVector.rindex = 0;
     return d;
     }
-  
+
   force rotDrag(State state, num t){
     return new force(new vector2(0,-state.vel.r*ROTATIONDRAG),new vector2(-20,0));
   }
-  
+
   force elevator(State state, num t){
     force rot = new force(new vector2(0,0), new vector2(-20,0));
     if(rightArrowPressed && state.vel.r < ROTATIONTHRESHHOLD){
@@ -84,7 +84,7 @@ class Airplane extends ActiveObject {
     }
     return rot;
   }
-  
+
   void update(num t, num dt){
     //if(rightArrowPressed)position.r += ROTATIONFACTOR * dt;
     //if(leftArrowPressed)position.r -= ROTATIONFACTOR * dt;

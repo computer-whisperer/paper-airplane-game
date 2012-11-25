@@ -1,5 +1,5 @@
-#library('Utilities');
-#import('dart:math');
+library Utilities;
+import 'dart:math';
 
 class vector2{
   bool rot = false;
@@ -26,6 +26,13 @@ class vector2{
   vector2 operator /(num v) => new vector2(x/v,y/v);
   vector2 operator *(num v) => new vector2(x*v,y*v);
   vector2 operator -(vector2 v) => new vector2(x-v.x,y-v.y);
+  num get magnitude => getDistanceTo(new vector2()).abs();
+  num get angle{
+    num r = atan(y/x);
+    if(y<0)r += PI/2;
+    return r;
+  }
+ // static vector2 dot(vector2 v1,vector2 v2) => cos(v1.angle-v2.angle);
 }
 
 class vector2R extends vector2{
@@ -57,7 +64,7 @@ class force{
   }
   void rotateForce(num radians) =>forceVector.rotate(radians);
   void rotateForceTo(num radians) => forceVector.rotateTo(radians);
-  
+
   static vector2R add(List<force> l){
     vector2R sum = new vector2R(0,0,0);
     for(int i = 0; i < l.length; i++){

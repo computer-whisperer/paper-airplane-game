@@ -1,39 +1,39 @@
-#library('Level');
-#import('../PhysicalObjects/PhysicalObject.dart');
-#import('../PhysicalObjects/ActiveObjects/Airplane/Airplane.dart');
-#import('../Graphics.dart');
-#import('../Utilities.dart');
-#import('../GameMode.dart');
+library Level;
+import '../PhysicalObjects/PhysicalObject.dart';
+import '../PhysicalObjects/ActiveObjects/Airplane/Airplane.dart';
+import '../Graphics.dart';
+import '../Utilities.dart';
+import '../GameMode.dart';
 class Level
 {
   num width, height;
   List<PhysicalObject> physicalObjects;
   num panFocus;
   num GRAVITY = 1000;
-  
+
   Level(){
     height = 2000;
     width = 1000;
     physicalObjects = new List<PhysicalObject>();
   }
-  
+
   vector2 windspeed(vector2 p) => new vector2(0,0);
-  
-  bool get loading(){
+
+  bool get loading{
     bool loading = false;
     for(int i = 0; i < physicalObjects.length; i++){
-      if(physicalObjects[i].loading) loading = true;      
+      if(physicalObjects[i].loading) loading = true;
     }
     return loading;
   }
-  
+
   update(num t,num dt){
     physicalObjects.forEach(void f(PhysicalObject element){element.update(t,dt);});
     //set pan to focus on the physical object identified by panFocus
 
   }
-  
-  
+
+
  /* void collisionCheck(){
     for(int i = 0; i < dynamicElements[0].pointsForCollisionChecking.length; i++){
       vector2 orgpoint = dynamicElements[0].pointsForCollisionChecking[i];
@@ -53,7 +53,7 @@ class Level
       }
       if(color== -16777216||newx > background.ielement.width||newx < 0||newy > background.ielement.height||newy < 0){
         print('collision!');
-        
+
         num rot =  Math.atan2(orgy,orgx);
         force f = new force(dynamicElements[0].xSpeed,dynamicElements[0].ySpeed);
         f.rotate(rot);
@@ -61,7 +61,7 @@ class Level
         f.rotate(-rot);
         dynamicElements[0].xSpeed = f.x;
         dynamicElements[0].ySpeed = f.y;
-        
+
  //       Point absCollisionPoint = new Point(orgx.abs(),orgy.abs());
   //      if(absCollisionPoint.x * dynamicElements[0].xSpeed > 0) dynamicElements[0].xSpeed *= -dynamicElements[0].REBOUNDFACTOR;
    //     if(absCollisionPoint.y * dynamicElements[0].ySpeed > 0) dynamicElements[0].ySpeed *= -dynamicElements[0].REBOUNDFACTOR;
@@ -78,7 +78,7 @@ class Level
     if(graphics.ypan < 0) graphics.ypan = 0;
     physicalObjects.forEach(void f(var element){element.render(alpha);});
   }
-  
-  
-  
+
+
+
 }

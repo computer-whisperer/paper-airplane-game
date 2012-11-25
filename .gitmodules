@@ -1,0 +1,3 @@
+[submodule "PaperAirplane/engine"]
+	path = PaperAirplane/engine
+	url = https://robot.inventor@code.google.com/p/paper-airplane-game.engine/

@@ -1,9 +1,9 @@
-#library('background');
-#import('../Graphics.dart');
-#import('../Utilities.dart');
-#import('../PaperAirplane.dart');
-#import('PhysicalObject.dart');
-#import('dart:html');
+library background;
+import '../Graphics.dart';
+import '../Utilities.dart';
+import '../PaperAirplane.dart';
+import 'PhysicalObject.dart';
+import 'dart:html';
 
 class Background extends PhysicalObject {
   Background(String graphicPath):super(new vector2R(0,0,0),1,graphicPath,-16777216){

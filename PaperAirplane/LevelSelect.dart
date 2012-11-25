@@ -1,11 +1,11 @@
-#library('LevelSelect.dart');
-#import('dart:html');
-#import('Levels/Level.dart');
-#import("Levels/DeadWeightTestLevel/DeadWeightTestLevel.dart");
-#import('Levels/GenericLevel/GenericLevel.dart');
-#import('PaperAirplane.dart');
-#import('GameMode.dart');
-#import('Graphics.dart');
+library LevelSelect;
+import 'dart:html';
+import 'Levels/Level.dart';
+import "Levels/DeadWeightTestLevel/DeadWeightTestLevel.dart";
+import 'Levels/GenericLevel/GenericLevel.dart';
+import 'PaperAirplane.dart';
+import 'GameMode.dart';
+import 'Graphics.dart';
 
 String levelsrc = 'Levels/GenericLevel/airplane-game.png';
 
@@ -26,14 +26,14 @@ class LevelSelect{
     document.query('input').on.change.add(importBackground);
     document.query('button').on.click.add((var e){startLevel();});
   }
-  
-  startLevel(){
+
+  void startLevel(){
    gameMode.level = new GenericLevel(levelsrc);
    gameMode.change(1);
   }
-  
-  render(){}
-  
-  update(num t,num dt){}
-  
+
+  void render(){}
+
+  void update(num t,num dt){}
+
 }

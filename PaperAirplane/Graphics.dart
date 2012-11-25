@@ -1,17 +1,17 @@
-#library('Graphics');
-#import('dart:html');
-#import('Utilities.dart');
-#import('PaperAirplane.dart');
+library Graphics;
+import 'dart:html';
+import 'Utilities.dart';
+import 'PaperAirplane.dart';
 
 Graphics graphics;
 
 class Graphics {
-  
+
   CanvasElement canvas;
   CanvasRenderingContext2D context;
   num xpan = 0;
   num ypan = 0;
-  
+
   Graphics(this.canvas){
     //set canvas size to max visible without scrolling
     canvas.width = window.innerWidth-100;
@@ -22,7 +22,7 @@ class Graphics {
     //get the context
     context = canvas.getContext('2d');
   }
-  
+
   void resizeCanvas(){
     //this will be called whenever the window is resized or the level started
     if(gameMode.width == null)return;
@@ -32,7 +32,7 @@ class Graphics {
     if(canvas.width > gameMode.width)canvas.width = gameMode.width;
 
   }
-  
+
   void DrawGraphic(ImageElement img, num x, num y, num r){
     context.save();
     context.translate((x-xpan), canvas.height-(y-ypan));
@@ -40,18 +40,18 @@ class Graphics {
     context.drawImage(img, -(img.width/2), -(img.height/2));
     context.restore();
   }
-  
+
   void DrawGraphicWithScale(ImageElement img, num x, num y, num r, num scale){
-    
+
     context.save();
     context.translate((x-xpan), canvas.height-(y-ypan));
     context.rotate(r);
     context.drawImage(img, -((img.width*scale)/2), -((img.height*scale)/2),img.width*scale,img.height*scale);
     context.restore();
   }
-  
-  
-  
+
+
+
 }
 
 
@@ -60,7 +60,7 @@ class Graphic{
   ImageData imageData;
   Int32Array pixelData;
   num width, height;
-  
+
   void LoadGraphic(String path){
    image = new ImageElement(path);
    image.on.load.add(f(var e){
@@ -68,20 +68,20 @@ class Graphic{
      height = image.height;
    });
   }
-  
+
   void Draw(vector2R v){
     graphics.DrawGraphic(image, v.x, v.y, v.r);
   }
-  
+
   void DrawWithScale(vector2R v, num s){
     graphics.DrawGraphicWithScale(image, v.x, v.y, v.r, s);
   }
-  
+
   void saveImageData(){
    // data.data.setImageData(buf8);
-  
+
   }
-  
+
   int getPixelColor(vector2 p){
     if(pixelData == null)return 0;
     p.x += width/2;
@@ -96,7 +96,7 @@ class Graphic{
     int color = pixelData[i];
     return color;
   }
-  
+
   void loadImageData(){
     CanvasElement canvas = new CanvasElement();
     canvas.width = image.width;
@@ -106,7 +106,7 @@ class Graphic{
     imageData = context.getImageData(0,0,canvas.width,canvas.height);
     pixelData = new Int32Array.fromBuffer(imageData.data.buffer);
   }
-  
+
   List parseImageForPixels(int hex){
     List result = new List();
     if(hex == null)return result;
@@ -120,5 +120,5 @@ class Graphic{
       }
     }
     return result;
-  } 
+  }
 }

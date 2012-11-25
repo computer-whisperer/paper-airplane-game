@@ -1,8 +1,8 @@
-#library('GameMode');
-#import('Levels/Level.dart');
-#import('LevelSelect.dart');
+library GameMode;
+import 'Levels/Level.dart';
+import 'LevelSelect.dart';
 class GameMode {
-  num get width(){
+  num get width{
     switch(mode){
       case 1:
         return level.width;
@@ -10,7 +10,7 @@ class GameMode {
         return levelSelect.width;
     }
   }
-  num get height(){
+  num get height{
     switch(mode){
       case 1:
         return level.height;
@@ -18,7 +18,7 @@ class GameMode {
         return levelSelect.height;
     }
   }
-  bool get loading(){
+  bool get loading{
     switch(mode){
       case 1:
         return level.loading;
@@ -32,11 +32,11 @@ class GameMode {
   GameMode(){
     levelSelect = new LevelSelect();
   }
-  
+
   change(num m){
     mode = m;
   }
-  
+
   update(num t, num dt){
     switch(mode){
       case 1:
@@ -45,7 +45,7 @@ class GameMode {
         return levelSelect.update(t, dt);
     }
   }
-  
+
   render(num alpha){
     switch(mode){
       case 1:

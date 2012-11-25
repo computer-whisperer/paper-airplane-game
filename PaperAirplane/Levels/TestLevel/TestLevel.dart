@@ -1,9 +1,9 @@
-#library('TestLevel');
-#import('../Level.dart');
-#import('../../Graphics.dart');
+library TestLevel;
+import '../Level.dart';
+import '../../Graphics.dart';
 
 class TestLevel extends Level {
-  
+
   TestLevel(){
     background = new Graphic();
     backgroundOutline = new Graphic();
@@ -18,8 +18,8 @@ class TestLevel extends Level {
     background.Draw(1000*(b-1), 500, 0);
     super.draw();
   }
-  
-  
-  
-  
+
+
+
+
 }

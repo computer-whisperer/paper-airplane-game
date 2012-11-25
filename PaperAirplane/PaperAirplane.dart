@@ -1,10 +1,10 @@
-#library('PaperAirplane');
-#import('dart:html');
-#import('Levels/Level.dart');
-#import("Levels/GenericLevel/GenericLevel.dart");
-#import('Graphics.dart');
-#import('LevelSelect.dart');
-#import('GameMode.dart');
+library PaperAirplane;
+import 'dart:html';
+import 'Levels/Level.dart';
+import "Levels/GenericLevel/GenericLevel.dart";
+import 'Graphics.dart';
+import 'LevelSelect.dart';
+import 'GameMode.dart';
 
 bool framerateData = true;
 GameMode gameMode;
@@ -26,7 +26,7 @@ void main() {
   graphics = new Graphics(query('canvas'));
   gameMode = new GameMode();
   frameRateData = query('.framerateData');
-  timer = new Stopwatch.start();
+  timer = new Stopwatch()..start();
   updateLoop();
   renderLoop();
 }
@@ -54,7 +54,7 @@ renderLoop(){
   newTime = timer.elapsed()/timer.frequency();
   frameTime = newTime - currentTime;
   if ( frameTime > deltaTime * 3 )
-    frameTime = deltaTime * 3; 
+    frameTime = deltaTime * 3;
   currentTime = newTime;
   accumulator += frameTime - .005;
   int i = 0;
@@ -67,7 +67,7 @@ renderLoop(){
      }
     accumulator -= deltaTime;
     time+=deltaTime;
-    
+
     i++;
   }
   if(framerateData)frameRateData.innerHTML = 's = $s <br/>ptpf = $physicsTimePerFrame <br/>  fps = ${1/frameTime} <br/> frameTime = $frameTime <br/> deltaTime = $deltaTime, <br/> accumulator = $accumulator <br/> time = $time <br/> currentTime = $currentTime <br/> newTime = $newTime  <br/> i = $i ';
@@ -75,8 +75,8 @@ renderLoop(){
   window.setTimeout(gameLoop1,3);
 }*/
 
-  
 
-  
-  
-  
+
+
+
+
